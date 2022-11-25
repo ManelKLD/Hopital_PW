@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" href="{{asset("/image/logo_hopital.png") }}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Righteous&family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+
+
+		<title>Recherche Patient</title>
+	</head>
+	<body>
+
+		<style>
+			.container {
+				background-color: #738c8e;
+				margin-top: 5%;
+				padding: 3%;
+				color: #34495E;
+				font-weight: bold;
+				margin-top: 10%;
+
+				margin-left: 5%;
+			}
+
+			h1 {
+				font-family: 'Righteous', cursive;
+				color: #1B2631;
+				text-align: center;
+				margin-top: 5%;
+			}
+
+			.date {
+				color: white;
+				padding-top: 20%;
+			}
+
+			.toolbar {
+				background-color: #F7F2DE;
+			}
+			.recherche {}
+			.text-center {
+				margin-top: 5%;
+			}
+			img {
+				height: 75vh;
+			}
+			.form {
+				height: 100vh;
+			}
+		</style>
+		<h1>Rechercher des patients</h1>
+		<div class="row form">
+			<div class="col-4">
+				<img src="{{asset("/image/h.jpg") }}" alt="">
+			</div>
+
+			<div
+				class="col-7">
+
+				{# {{form(form)}} #}
+
+				{{ form_start(recherche_form) }}
+
+
+				<div class="container">
+					<div class="row">
+						<div class="col-6">
+
+							<div class="form-group">
+								{{ form_row(recherche_form.Nom, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="form-group">
+								{{ form_row(recherche_form.Date, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						</div>
+
+						<div class="col-3">
+							<div class="date">
+								au
+								{{dateAuj}}
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-6">
+							<div class="form-group">
+								{{ form_row(recherche_form.Pays, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						</div>
+
+
+						<div class="col-6">
+							<div class="form-group">
+								{{ form_row(recherche_form.Motif, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						</div>
+					</div>
+
+					<div class="row text-center">
+						<div class="form-group col-sm">
+							{{ form_row(recherche_form.Rechercher, {'attr': {'class': 'btn btn-outline-dark'}}) }}
+						</div>
+
+						<div class="form-group col-sm">
+							{{ form_row(recherche_form.Vider, {'attr': {'class': 'btn btn-outline-dark'}}) }}
+						</div>
+
+					</div>
+				</div>
+				{{ form_end(recherche_form) }}
+			</div>
+		</div>
+
+		<div class="row">
+			<h2>Resultat de la recherche</h2>
+
+			{% for patient in patients %}
+				<div>Nom :
+					{{patient.nom}}</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
+{#<div class="row text-center"><div class="form-group col-sm">{{ form_row(contacts_form.Envoyer, {'attr': {'class': 'btn btn-outline-dark'}}) }}</div><div class="form-group col-sm">{{ form_row(contacts_form.Vider, {'attr': {'class': 'btn btn-outline-dark'}}) }}</div></div>#}
