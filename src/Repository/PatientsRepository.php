@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Patients;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Patients>
@@ -47,24 +49,31 @@ class PatientsRepository extends ServiceEntityRepository
      */
     public function TrouverPatient($FormData)
     {
+        //if ($FormData['Nom'] == null and $FormData['Pays'] == null and $FormData['Motif'] == null and $FormData['Date'] == null) {
+
+
         return $this->createQueryBuilder('patient') //p = table patient
 
+            // if ($FormData['Nom']==''){
+            //    echo 'valeur nulle'
+            //}
+
+            //requete sur le nom
+            ->andWhere('patient.nom LIKE :nom') //nom de la table
+            ->setParameter('nom', '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+            ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
 
             //requete sur le pays
-            ->orWhere('patient.codePays = :codePays') //nom de la table
+            ->andWhere('patient.codePays = :codePays') //nom de la table
             ->setParameter('codePays', $FormData['Pays'])
 
             //requete sur le motif
-            ->orWhere('patient.codeMotif = :codeMotif') //nom de la table
+            ->andWhere('patient.codeMotif = :codeMotif') //nom de la table
             ->setParameter('codeMotif', $FormData['Motif'])
 
-            //requete sur le nom
-            ->orWhere('patient.nom = :nom') //nom de la table
-            ->setParameter('nom', $FormData['Nom']) //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
-            //->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
 
             //requete sur la date
-            ->orWhere('patient.dateNaiss = :date') //nom de la table
+            ->andWhere('patient.dateNaiss = :date') //nom de la table
             ->setParameter('date', $FormData['Date'])
 
             //->select('patient', 'p', 'm')
