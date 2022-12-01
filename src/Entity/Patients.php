@@ -161,7 +161,7 @@ class Patients
         return $this;
     }
 
-    public function getCodeMotif(): ?int
+    public function getCodeMotif()
     {
         return $this->codeMotif;
     }
@@ -173,7 +173,7 @@ class Patients
         return $this;
     }
 
-    public function getSexe(): ?string
+    public function getSexe()
     {
         return $this->sexe;
     }

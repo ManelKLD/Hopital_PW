@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use App\Entity\Pays;
 use App\Entity\Motifs;
@@ -19,6 +20,11 @@ class RecherchePatientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        for ($i = 1900; $i <  date('Y'); $i++) {
+            $i;
+        }
+
         $builder
 
             ->add('Nom', TextType::class, [
@@ -53,7 +59,15 @@ class RecherchePatientType extends AbstractType
                 'placeholder' => 'Indifférent'
             ])
 
-            ->add('Date', DateType::class, [
+            ->add('Date', ChoiceType::class, [
+                'choices' => [
+                    $i => $i,
+                ],
+                'required' => false,
+                'placeholder' => 'Indifférent',
+            ])
+
+            ->add('du', DateType::class, [
                 'required' => false,
                 'widget' => 'single_text',
                 // 'placeholder' => [

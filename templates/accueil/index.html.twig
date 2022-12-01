@@ -21,18 +21,7 @@
 		<h1>Hello
 			{{ controller_name }}! ✅</h1>
 
-		This friendly message is coming from:
-		<ul>
-			<li>Your controller at
-				<code>
-					<a href="{{ 'C:/xampp/htdocs/projet_hopital/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a>
-				</code>
-			</li>
-			<li>Your template at
-				<code>
-					<a href="{{ 'C:/xampp/htdocs/projet_hopital/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a>
-				</code>
-			</li>
-		</ul>
+		<a href="{{ path('recherche_patient') }}">Accéder à la recherche</a>
+
 	</div>
 {% endblock %}

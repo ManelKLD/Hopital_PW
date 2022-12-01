@@ -15,22 +15,25 @@
 	<body>
 
 		<style>
+			body {
+				background-color: #2e464e;
+			}
 			.container {
-				background-color: #738c8e;
-				margin-top: 5%;
+				background-color: #b4bbba;
+				margin-top: 2%;
 				padding: 3%;
 				color: #34495E;
 				font-weight: bold;
 				margin-top: 10%;
-
 				margin-left: 5%;
 			}
 
 			h1 {
 				font-family: 'Righteous', cursive;
-				color: #1B2631;
+				color: white;
 				text-align: center;
-				margin-top: 5%;
+				padding-top: 1%;
+				padding-bottom: 1%;
 			}
 
 			.date {
@@ -46,10 +49,30 @@
 				margin-top: 5%;
 			}
 			img {
-				height: 75vh;
+				height: 25%;
 			}
 			.form {
-				height: 100vh;
+				height: 70vh;
+				background-color: white;
+
+			}
+			.res {
+				background-color: #F8F9F9;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 10;
+			}
+			.res_title {
+				color: #2e464e;
+				margin-top: 5%;
+				text-align: center;
+			}
+			.container2 {
+				padding-bottom: 5%;
+			}
+			.col-7 {
+				height: 5vh;
 			}
 		</style>
 		<h1>Rechercher des patients</h1>
@@ -81,10 +104,10 @@
 						</div>
 
 						<div class="col-3">
-							<div class="date">
-								au
-								{{dateAuj}}
+							<div class="form-group">
+								{{ form_row(recherche_form.du, {'attr': {'class': 'form-control'}}) }}
 							</div>
+							{#<div class="date">au{{dateAuj}}</div>#}
 						</div>
 
 					</div>
@@ -119,32 +142,38 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<h2>Resultat de la recherche</h2>
-
-			{% for patient in patients %}
-				<div>Nom :
-					{{patient.nom}}
+		<div class="row res">
+			<div class="container2">
+				<h1 class="res_title">Resultat de la recherche</h1>
+				<br/>
+				<div class="resultat">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Prénom</th>
+								<th scope="col">Fiche Patient</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for patient in patient %}
+								<tr>
+									<th scope="row">{{patient.code}}</th>
+									<td>{{patient.nom}}</td>
+									<td>{{patient.prenom}}</td>
+									<td>
+										<a href="{{ path('patient_show', {'code': patient.code}) }}">
+											click 🗎</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 				</div>
-				<div>Prénom :
-					{{patient.prenom}}
-				</div>
-
-			{% endfor %}
-
-		</div>
-
-
-		<div class="row">
-			<h2>Toute la liste</h2>
-
-			{% for p in liste_patients %}
-				<h2>{{ p.nom }}</h2>
-			{% endfor %}
-
-		</div>
-
-
+			</div>
+		</body>
 	</body>
 </html>
+{#<div class="row">{% for p in liste_patients %}<p>{{ p.nom }}</p><br/><br/>{% endfor %}</div>#}
 {#<div class="row text-center"><div class="form-group col-sm">{{ form_row(contacts_form.Envoyer, {'attr': {'class': 'btn btn-outline-dark'}}) }}</div><div class="form-group col-sm">{{ form_row(contacts_form.Vider, {'attr': {'class': 'btn btn-outline-dark'}}) }}</div></div>#}
