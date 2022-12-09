@@ -56,7 +56,7 @@ class UploadDocumentType extends AbstractType
             ->add('Patients', EntityType::class, [
                 'class' => Patients::class,
                 'required' => true,
-                'mapped' => false,
+                'mapped' => true,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('pa')
                         ->orderBy('pa.code', 'ASC');
@@ -68,7 +68,7 @@ class UploadDocumentType extends AbstractType
 
             ->add('nature', TextType::class, [
                 'required' => false,
-                'mapped' => false,
+                'mapped' => true,
             ])
 
             // ->add('Extensions', TextType::class, [
