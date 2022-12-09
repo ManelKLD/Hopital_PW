@@ -3,13 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\MotifsRepository;
 
 /**
  * Motifs
  *
  * @ORM\Table(name="motifs")
- * @ORM\Entity(repositoryClass="App\Repository\MotifsRepository")
+ * @ORM\Entity
  */
 class Motifs
 {
@@ -29,20 +28,5 @@ class Motifs
      */
     private $libelle;
 
-    public function getCode(): ?int
-    {
-        return $this->code;
-    }
 
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
-    }
 }

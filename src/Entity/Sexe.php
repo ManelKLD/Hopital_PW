@@ -3,13 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\SexeRepository;
 
 /**
  * Sexe
  *
  * @ORM\Table(name="sexe")
- * @ORM\Entity(repositoryClass="App\Repository\SexeRepository")
+ * @ORM\Entity
  */
 class Sexe
 {
@@ -29,20 +28,5 @@ class Sexe
      */
     private $libelle;
 
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
 
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
-    }
 }

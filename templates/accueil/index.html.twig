@@ -1,27 +1,121 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Righteous&family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
 
-{% block title %}Hello AccueilController!
-{% endblock %}
-
-{% block body %}
+		<title>Accueil</title>
+	</head>
 	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
+
+
+		.banner-image {
+			width: 100%;
+			height: 100vh;
+			background-image: url('/image/bg.jpg');
+			background-size: cover;
+			background-position: center;
+
 		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
+
+		.contenu {
+			text-align: center;
+			margin: 20%;
+		}
+		a {
+			font-family: system-ui;
+			font: 18px / 1.5 sans-serif;
+			color: white;
+			font-style: bold;
+		}
+		a:link:hover {
+			text-decoration: none;
+		}
+		.btn:hover,
+		a:hover {
+			color: #2e464e;
+			font-style: bold;
+		}
+		.gauche {
+			background-color: #2e464e;
+			min-height: 100%;
+		}
+
+		.droite {
+			background-color: #e5e5e5;
+			height: 94vh;
+			text-align: center;
+		}
+
+		.header {
+			height: 7vh;
+			background-color: white;
+
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+		}
+		.title {
+			font-family: 'Righteous', cursive;
+			font-size: 2.5em;
+
+		}
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		img {
+			height: 100%;
+		}
+		.text {
+			color: white;
+			font: 18px / 1.5 sans-serif;
 		}
 	</style>
 
-	<div class="example-wrapper">
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
 
-		<a href="{{ path('recherche_patient') }}">Accéder à la recherche</a>
+	<body>
+		<div class="row header align-self-center h-100">
+			<p class="title">Hopital</p>
+		</div>
+		<div class="row ">
+			<div class="col-6 gauche">
+				<div class="contenu">
+					<div class=" row text">
+						Bienvenue sur votre interface administrateur au sein de l'Hopital. Vous pouvez :
+					</div><br/>
+					<div class="row btn">
+						<button type="button" class="btn btn-outline-light">
+							<a href="https://127.0.0.1:8000/rp?recherche_patient%5BNom%5D=&recherche_patient%5BDate%5D=&recherche_patient%5Bdu%5D=&recherche_patient%5BPays%5D=&recherche_patient%5BMotif%5D=&recherche_patient%5BRechercher%5D=">Accéder à la recherche</a>
+						</button>
+					</div>
+					<br/>
+					<div class="row btn">
+						<button type="button" class="btn btn-outline-light">
+							<a href="">Rechercher un fichier</a>
+						</button>
+					</div>
+					<br/>
+					<div class="row btn">
+						<button type="button" class="btn btn-outline-light">
+							<a href="{{ asset ("/upload/document")}}">Importer un fichier</a>
+						</button>
+					</div>
 
-	</div>
-{% endblock %}
+				</div>
+			</div>
+			<div class="col-6 droite">
+				<img src="{{asset("/image/ap.png") }}" alt="">
+			</div>
+		</div>
+
+	</body>
+</html>

@@ -52,13 +52,15 @@ class PatientsRepository extends ServiceEntityRepository
     {
         $r = $this->createQueryBuilder('patient'); //p = table patient
         //si tout les champs vide
+
+
         if ($FormData['Nom'] == null and $FormData['Pays'] == null and $FormData['Motif'] == null and $FormData['Date'] == null) {
 
             return $r
 
                 //requete sur le nom
-                ->Where('patient.nom LIKE :nom') //nom de la table
-                ->setParameter('nom',  $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->orWhere('patient.nom LIKE :nom') //nom de la table
+                ->setParameter('nom',  '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
                 ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
 
                 //requete sur le pays
@@ -89,12 +91,11 @@ class PatientsRepository extends ServiceEntityRepository
 
                 //requete sur le pays
                 ->andWhere('patient.codePays = :codePays') //nom de la table
-                ->setParameter('codePays', $FormData['Pays'])
+                ->setParameter('codePays',  $FormData['Pays'])
 
                 //requete sur le motif
                 ->andWhere('patient.codeMotif = :codeMotif') //nom de la table
                 ->setParameter('codeMotif', $FormData['Motif'])
-
 
                 //requete sur la date
                 ->andWhere('patient.dateNaiss = :date') //nom de la table
@@ -145,12 +146,12 @@ class PatientsRepository extends ServiceEntityRepository
                 ->getResult();
         }
         //si que le motif est vide
-        else if ($FormData['Motif'] == "Indifférent") {
+        else if ($FormData['Motif'] == null) {
             return $r
 
                 //requete sur le nom
                 ->andWhere('patient.nom LIKE :nom') //nom de la table
-                ->setParameter('nom', '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->setParameter('nom',  '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
                 ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
 
                 //requete sur le pays
@@ -167,14 +168,27 @@ class PatientsRepository extends ServiceEntityRepository
 
         //si tout vide sauf le nom
 
-        else if ($FormData['Nom'] != null and $FormData['Pays'] == null and $FormData['Motif'] == null and $FormData['Date'] == null) {
+        else if ($FormData['Nom'] != null and $FormData['Pays'] == 'Indifférent' and $FormData['Motif'] == null and $FormData['Date'] == null) {
 
             return $r
 
                 //requete sur le nom
                 ->Where('patient.nom LIKE :nom') //nom de la table
-                ->setParameter('nom',  $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->setParameter('nom',  '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
                 ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
+
+                //requete sur le pays
+                ->orWhere('patient.codePays = :codePays') //nom de la table
+                ->setParameter('codePays', $FormData['Pays'])
+
+                //requete sur le motif
+                ->orWhere('patient.codeMotif = :codeMotif') //nom de la table
+                ->setParameter('codeMotif', $FormData['Motif'])
+
+
+                //requete sur la date
+                ->orWhere('patient.dateNaiss = :date') //nom de la table
+                ->setParameter('date', $FormData['Date'])
 
                 ->getQuery()
                 ->getResult();
@@ -187,7 +201,7 @@ class PatientsRepository extends ServiceEntityRepository
 
                 //requete sur le nom
                 ->andWhere('patient.nom LIKE :nom') //nom de la table
-                ->setParameter('nom', '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->setParameter('nom',  '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
                 ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
 
                 //requete sur le pays
@@ -202,6 +216,61 @@ class PatientsRepository extends ServiceEntityRepository
                 ->andWhere('patient.dateNaiss = :date') //nom de la table
                 ->setParameter('date', $FormData['Date'])
 
+                ->getQuery()
+                ->getResult();
+        }
+        //si motif et date null
+        else if ($FormData['Nom'] != null and $FormData['Pays'] != null and $FormData['Motif'] == null and $FormData['Date'] == null) {
+
+            return $r
+                //requete sur le nom
+                ->andWhere('patient.nom LIKE :nom') //nom de la table
+                ->setParameter('nom',  $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
+
+                //requete sur le pays
+                ->andWhere('patient.codePays = :codePays') //nom de la table
+                ->setParameter('codePays', $FormData['Pays'])
+
+
+                ->getQuery()
+                ->getResult();
+        } else if ($FormData['Nom'] != null and $FormData['Pays'] != null and $FormData['Motif'] != null and $FormData['Date'] == null) {
+
+            return $r
+                //requete sur le nom
+                ->andWhere('patient.nom LIKE :nom') //nom de la table
+                ->setParameter('nom',  $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
+
+                //requete sur le pays
+                ->andWhere('patient.codePays = :codePays') //nom de la table
+                ->setParameter('codePays', $FormData['Pays'])
+
+                //requete sur le motif
+                ->andWhere('patient.codeMotif = :codeMotif') //nom de la table
+                ->setParameter('codeMotif', $FormData['Motif'])
+
+                ->getQuery()
+                ->getResult();
+        } else if ($FormData['Nom'] == null and $FormData['Pays'] != null and $FormData['Motif'] == null and $FormData['Date'] == null) {
+            return $r
+                //requete sur le pays
+                ->andWhere('patient.codePays = :codePays') //nom de la table
+                ->setParameter('codePays', $FormData['Pays'])
+
+                //requete sur le nom
+                ->orWhere('patient.nom LIKE :nom') //nom de la table
+                ->setParameter('nom',  '%' . $FormData['Nom'] . '%') //'Nom' provient de forulaire, FormData contient les infos saisie dans le formulaire
+                ->orderBy('patient.nom' /*and 'p.prenom'*/, 'ASC')
+
+                //requete sur le motif
+                ->orWhere('patient.codeMotif = :codeMotif') //nom de la table
+                ->setParameter('codeMotif', $FormData['Motif'])
+
+                //requete sur la date
+                ->orWhere('patient.dateNaiss = :date') //nom de la table
+                ->setParameter('date', $FormData['Date'])
                 ->getQuery()
                 ->getResult();
         }

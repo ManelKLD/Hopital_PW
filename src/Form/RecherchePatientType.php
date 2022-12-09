@@ -18,12 +18,29 @@ use Doctrine\ORM\EntityRepository;
 
 class RecherchePatientType extends AbstractType
 {
+
+    public function annee(int $i)
+    {
+        $i = date('Y');
+        while ($i > 1900) {
+            $i;
+            $i--;
+        }
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
-        for ($i = 1900; $i <  date('Y'); $i++) {
-            $i;
-        }
+        //boucle qui permet d'afficher les années de 1900 à aujourd'hui
+        //for ($i = 1900; $i <  date('Y'); $i++) {
+        //    $i;
+        //}
+
+
+
+        $anneeDebut = 1900;
+        $anneeFin = date('Y');
+
 
         $builder
 
@@ -59,12 +76,23 @@ class RecherchePatientType extends AbstractType
                 'placeholder' => 'Indifférent'
             ])
 
-            ->add('Date', ChoiceType::class, [
-                'choices' => [
-                    $i => $i,
-                ],
+            ->add('Date', DateType::class, [
+                //'choices' => [
+                //    'du...' => range(1900, 2022),
+                //],
+                'widget' => 'single_text',
                 'required' => false,
-                'placeholder' => 'Indifférent',
+                'format' => 'yyyy-MM-dd'
+
+                //'choices' => [
+                //    $i => $i,
+                //],
+                //'required' => false,
+                //'widget' => 'single_text',
+                //'format' => 'yyyy',
+                //'placeholder' => 'Indifférent',
+                //'html5' => false,
+
             ])
 
             ->add('du', DateType::class, [

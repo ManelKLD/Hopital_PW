@@ -3,13 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\PatientsRepository;
 
 /**
  * Patients
  *
- * @ORM\Table(name="patients", indexes={@ORM\Index(name="fk_pays", columns={"Code_Pays"}), @ORM\Index(name="fk_motif", columns={"Code_Motif"}), @ORM\Index(name="fk_sexe", columns={"Sexe"})})
- * @ORM\Entity (repositoryClass="App\Repository\PatientsRepository")
+ * @ORM\Table(name="patients", indexes={@ORM\Index(name="fk_sexe", columns={"Sexe"}), @ORM\Index(name="fk_motifs", columns={"Code_Motif"}), @ORM\Index(name="fk_pays", columns={"Code_Pays"})})
+ * @ORM\Entity
  */
 class Patients
 {
@@ -37,6 +36,13 @@ class Patients
     private $prenom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="Sexe", type="string", length=1, nullable=false)
+     */
+    private $sexe;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="Date_Naiss", type="date", nullable=false)
@@ -46,16 +52,16 @@ class Patients
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Num_Secu", type="string", length=15, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Num_Secu", type="string", length=15, nullable=true)
      */
-    private $numSecu = 'NULL';
+    private $numSecu;
 
     /**
      * @var string
      *
      * @ORM\Column(name="Code_Pays", type="string", length=2, nullable=false)
      */
-    public $codePays;
+    private $codePays;
 
     /**
      * @var \DateTime
@@ -65,123 +71,14 @@ class Patients
     private $dateEntree;
 
     /**
-     * @var \int
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Motifs")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Code_Motif", referencedColumnName="Code")
-     * })
+     * @ORM\Column(name="Code_Motif", type="string", length=1, nullable=false)
      */
     private $codeMotif;
 
-    /**
-     * @var \string
-     *
-     * @ORM\ManyToOne(targetEntity="Sexe")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Sexe", referencedColumnName="Code")
-     * })
-     */
-    private $sexe;
-
-    public function getCode(): ?int
+    public function __toString()
     {
-        return $this->code;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getDateNaiss(): ?\DateTimeInterface
-    {
-        return $this->dateNaiss;
-    }
-
-    public function setDateNaiss(\DateTimeInterface $dateNaiss): self
-    {
-        $this->dateNaiss = $dateNaiss;
-
-        return $this;
-    }
-
-    public function getNumSecu(): ?string
-    {
-        return $this->numSecu;
-    }
-
-    public function setNumSecu(?string $numSecu): self
-    {
-        $this->numSecu = $numSecu;
-
-        return $this;
-    }
-
-    public function getCodePays(): ?string
-    {
-        return $this->codePays;
-    }
-
-    public function setCodePays(string $codePays): self
-    {
-        $this->codePays = $codePays;
-
-        return $this;
-    }
-
-    public function getDateEntree(): ?\DateTimeInterface
-    {
-        return $this->dateEntree;
-    }
-
-    public function setDateEntree(\DateTimeInterface $dateEntree): self
-    {
-        $this->dateEntree = $dateEntree;
-
-        return $this;
-    }
-
-    public function getCodeMotif()
-    {
-        return $this->codeMotif;
-    }
-
-    public function setCodeMotif(?Motifs $codeMotif): self
-    {
-        $this->codeMotif = $codeMotif;
-
-        return $this;
-    }
-
-    public function getSexe()
-    {
-        return $this->sexe;
-    }
-
-    public function setSexe(?Sexe $sexe): self
-    {
-        $this->sexe = $sexe;
-
-        return $this;
+        return $this->nom; // Remplacer champ par une propriété "string" de l'entité
     }
 }
