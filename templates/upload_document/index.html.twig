@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UploadDocumentController!
+{% block title %}Insertion Document
 {% endblock %}
 
 {% block body %}
@@ -20,18 +20,53 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
+		<h1></h1>
 
-		This friendly message is coming from:
 		<ul>
-			<h1>Adding a new product</h1>
+			<h1>Insérez un document</h1>
 
 			{{ form_start(form) }}
 			{# ... #}
 
-			{{ form_row(form.document) }}
-			<button type="submit" class="btn btn-primary">Insérer</button>
+			<div class="container">
+				<div class="row">
+					<div class="col-6">
+
+						<div class="form-group">
+							{{ form_row(form.document, {'attr': {'class': 'form-control'}}) }}
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-group">
+							{{ form_row(form.idPatient, {'attr': {'class': 'form-control'}}) }}
+						</div>
+					</div>
+
+					<div class="col-3">
+						<div class="form-group">
+							{{ form_row(form.nature, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="date">au{{dateAuj}}</div>
+					</div>
+
+				</div>
+
+				<div class="col-3">
+					<div class="form-group">
+						{{ form_row(form.dateAjout, {'attr': {'class': 'form-control'}}) }}
+					</div>
+
+				</div>
+
+				<div class="row text-center">
+					<div class="form-group col-sm">
+						<button type="submit" class="btn btn-primary">Insérer</button>
+					</div>
+				</div>
+			</div>
+
+			{#{{ form_row(form) }}#}
+
 			{{ form_end(form) }}</ul>
 	</div>
 {% endblock %}

@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\CallbackTransformer;
 
 class UploadDocumentType extends AbstractType
 {
@@ -26,16 +27,8 @@ class UploadDocumentType extends AbstractType
             // ...
             ->add('document', FileType::class, [
                 'label' => 'Brochure (PDF file)',
-
-                // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
-                'required' => false,
-
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
+                'required' => true,
                 'constraints' => [
                     new File([
                         'maxSize' => '5120k',
@@ -48,40 +41,78 @@ class UploadDocumentType extends AbstractType
                             'image/webp',
                             'image/gif',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                        'mimeTypesMessage' => 'Veuillez sélectionner le document au format valide',
                     ])
                 ],
             ])
 
-            ->add('Patients', EntityType::class, [
-                'class' => Patients::class,
+            ->add('idPatient', ChoiceType::class, [
                 'required' => true,
                 'mapped' => true,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('pa')
-                        ->orderBy('pa.code', 'ASC');
-                },
-                // 
-                'required' => false,
-                'placeholder' => 'Indifférent'
+                'choices'  => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                    '7' => 7,
+                    '8' => 8,
+                ]
+
             ])
 
+            // ->add('idPatient', EntityType::class, [
+            //     'class' => Patients::class,
+            //     'required' => true,
+            //     'mapped' => false,
+            //     'query_builder' => function (EntityRepository $er) {
+            //         return $er->createQueryBuilder('pa')
+            //             ->orderBy('pa.code', 'ASC');
+            //     },
+            //     //'choice_label' => 'nom',
+            //     'choice_label' => 'code',
+            //     'required' => true,
+            //     'placeholder' => '...'
+            // ])
+
             ->add('nature', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'mapped' => true,
             ])
 
             // ->add('Extensions', TextType::class, [
             //     'required' => true,
-            // ]) //sans accent;
-        ;
+            // ])
+
+            ->add('dateAjout', DateType::class, [
+                'label' => 'Date',
+                'required' => false,
+                'html5' => false
+            ])
+
+            // ->add('Date', DateType::class, [
+            //     'required' => true,
+            // ])
+
+            // ...
+
+            ->get('dateAjout')->addModelTransformer(new CallbackTransformer(
+                function ($value) {
+                    if (!$value) {
+                        return new \DateTime();
+                    }
+                    return $value;
+                },
+                function ($value) {
+                    return $value;
+                }
+            ));
 
         $dateinsertion = date("d-m-Y");
-
-        // ...
-
-
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

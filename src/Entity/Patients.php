@@ -77,8 +77,106 @@ class Patients
      */
     private $codeMotif;
 
-    public function __toString()
+    public function getCode(): ?int
     {
-        return $this->nom; // Remplacer champ par une propriété "string" de l'entité
+        return $this->code;
     }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(string $sexe): self
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getDateNaiss(): ?\DateTimeInterface
+    {
+        return $this->dateNaiss;
+    }
+
+    public function setDateNaiss(\DateTimeInterface $dateNaiss): self
+    {
+        $this->dateNaiss = $dateNaiss;
+
+        return $this;
+    }
+
+    public function getNumSecu(): ?string
+    {
+        return $this->numSecu;
+    }
+
+    public function setNumSecu(?string $numSecu): self
+    {
+        $this->numSecu = $numSecu;
+
+        return $this;
+    }
+
+    public function getCodePays(): ?string
+    {
+        return $this->codePays;
+    }
+
+    public function setCodePays(string $codePays): self
+    {
+        $this->codePays = $codePays;
+
+        return $this;
+    }
+
+    public function getDateEntree(): ?\DateTimeInterface
+    {
+        return $this->dateEntree;
+    }
+
+    public function setDateEntree(\DateTimeInterface $dateEntree): self
+    {
+        $this->dateEntree = $dateEntree;
+
+        return $this;
+    }
+
+    public function getCodeMotif(): ?string
+    {
+        return $this->codeMotif;
+    }
+
+    public function setCodeMotif(string $codeMotif): self
+    {
+        $this->codeMotif = $codeMotif;
+
+        return $this;
+    }
+
+
 }

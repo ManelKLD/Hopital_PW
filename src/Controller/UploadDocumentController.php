@@ -19,14 +19,14 @@ class UploadDocumentController extends AbstractController
      */
     public function new(Request $request): Response
     {
-
+        $dateAuj = date('d/m/Y');
 
         $document = new Documents();
         $form = $this->createForm(UploadDocumentType::class, $document);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $brochureFile */
+            /** @var UploadedFile $docFile */
             $docFile = $form->get('document')->getData();
 
             $em = $this->getDoctrine()->getManager();
@@ -56,6 +56,7 @@ class UploadDocumentController extends AbstractController
 
         return $this->render('upload_document/index.html.twig', [
             'controller_name' => 'UploadDocumentController',
+            'dateAuj' => $dateAuj,
             'form' => $form->createView(),
         ]);
     }
